@@ -1,30 +1,37 @@
 <?php
 
-$list1 = array(1,2,3,4,5,6);
-echo '<pre>';
-print_r(getSumByFor($list1));
-echo '<br>';
+require_once(__DIR__ . '/config.php');
 
-function getSumByFor($list) {
-	$length = count($list);
-	$sum = 0;
+?>
 
-	for ($i = 0; $i < $length; $i++) {
-		$sum += $list[$i];
-	}
-
-	return $sum;
-}
-
-$list2 = array(1,2,3,4,5,6);
-print_r(getSumByWhile($list2));
-echo '<br>';
-
-function getSumByWhile($list) {
-	$sum = 0;
-  while (true) {
-    if(empty($list)) {
-      break;
-    }
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Twitter Connect!</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <style>
+  #container {
+    width: 500px;
+    margin: 0 auto;
+    padding-top: 20px;
   }
-}
+
+  h1 {
+    font-size: 18px;
+    padding: 3px 0;
+  }
+  #login {
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="login">
+      <a href="login.php"><i class="fab fa-twitter fa-5x"></i></a>
+    <h1 id="twitter">Twitterでログインしてね</h1>
+    </div>
+  </div>
+</body>
+</html>
