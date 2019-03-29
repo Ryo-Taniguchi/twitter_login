@@ -21,7 +21,7 @@ class User {
 
   // twitter IDからユーザー取得
   public function getUser($twUserId) {
-    $sql = sprintf("select from users where tw_user_id=%d", $twUserId);
+    $sql = sprintf("select * from users where tw_user_id=%d", $twUserId);
     $stmt = $this->_db->query($sql);
     $res = $stmt->fetch(\PDO::FETCH_OBJ);
     return $res;
@@ -34,7 +34,7 @@ class User {
     return $res->fetchColumn() === '1';
   }
 
-  function saveTokens($tokens) {
+  public function saveTokens($tokens) {
     // ユーザが存在するか(ユーザー定義)?
     if ($this->_exists($tokens['user_id'])) {
       $this->_update($tokens);

@@ -35,16 +35,15 @@ class TwitterLogin {
 
     $user = new User();
     $user->saveTokens($tokens);
-    echo "tokens saved";
-    exit;
 
     $_SESSION['me'] = $user->getUser($tokens['user_id']);
 
     // request tokenは使わないのでunset
     unset($_SESSION['oauth_token']);
     unset($_SESSION['oauth_token_secret']);
+    var_dump($_SERVER['HTTP_HOST']);;
 
-    goHome();
+    header('Location: http://' . $_SERVER['HTTP_HOST']);
   }
 
   // Request Tokenはユーザーを認証するまでの一時的なトークン
