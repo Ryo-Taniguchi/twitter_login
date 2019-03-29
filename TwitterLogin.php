@@ -7,6 +7,10 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 class TwitterLogin {
 
   public function login() {
+
+    if ($this->isLoggedIn()) {
+      header('Location: http://' . $_SERVER['HTTP_HOST']);
+    }
     // ユーザーが認証されると、ツイッター側で承認済みのrequset tokenとverifierの情報が渡されるので、この状態による分岐
     if (!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier'])){
       $this->_redirectFlow();
@@ -14,6 +18,10 @@ class TwitterLogin {
       $this->_callbackFlow();
     }
 
+  }
+  // ログインしているかどうか確認
+  public function isLoggedIn() {
+    return isset($_SESSION['me']) && !empty($_SESSION['me']);
   }
 
   private function _callbackFlow() {
@@ -36,12 +44,13 @@ class TwitterLogin {
     $user = new User();
     $user->saveTokens($tokens);
 
+    // セッションハイジャック(セッションを管理する際にクッキーにセッションIDが保存されるため、特定されるのを防ぐ)
+    session_regenerate_id(true);
     $_SESSION['me'] = $user->getUser($tokens['user_id']);
 
     // request tokenは使わないのでunset
     unset($_SESSION['oauth_token']);
     unset($_SESSION['oauth_token_secret']);
-    var_dump($_SERVER['HTTP_HOST']);;
 
     header('Location: http://' . $_SERVER['HTTP_HOST']);
   }
